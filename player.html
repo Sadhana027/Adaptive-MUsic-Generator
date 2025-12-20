@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mood Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://images.unsplash.com/photo-1495433324511-bf8e92934d90?ixlib=rb-4.0.0&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+        .song-card {
+            background-color: rgba(0, 0, 0, 0.7);
+            margin: 20px auto;
+            padding: 15px;
+            width: 60%;
+            border-radius: 10px;
+        }
+        .logout {
+            margin-top: 20px;
+        }
+        .weather-info {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.5);
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    {% set mood_emoji = {
+        'Happy': '😄',
+        'Sad': '😢',
+        'Angry': '😠',
+        'Neutral': '😐'
+    } %}
+
+    {% set weather_emoji = {
+        'Clear': '☀️',
+        'Clouds': '☁️',
+        'Rain': '🌧️',
+        'Drizzle': '🌦️',
+        'Thunderstorm': '⛈️',
+        'Snow': '❄️',
+        'Mist': '🌫️',
+        'Smoke': '💨',
+        'Haze': '🌁',
+        'Dust': '🌪️',
+        'Fog': '🌫️',
+        'Sand': '🌬️',
+        'Ash': '🌋',
+        'Squall': '🌬️',
+        'Tornado': '🌪️'
+    } %}
+
+    <h1>Hello {{ username }}, your mood is detected as <strong>{{ mood }}</strong> {{ mood_emoji.get(mood, '🙂') }}</h1>
+    <h3>🎶 Mood-based Songs</h3>
+
+    {% for song in songs %}
+    <div class="song-card">
+        <p>{{ song }}</p>
+        <audio controls>
+            <source src="{{ url_for('serve_song', filename=song) }}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+    {% endfor %}
+
+    <div class="weather-info">
+        <h3>🌤 Weather Info</h3>
+        <p><strong>City:</strong> {{ weather.city }}</p>
+        <p><strong>Condition:</strong> {{ weather.condition }} {{ weather_emoji.get(weather.condition, '') }}</p>
+        <p><strong>Temperature:</strong> {{ weather.temperature }} °C</p>
+        <p><strong>Humidity:</strong> {{ weather.humidity }}%</p>
+        <p><strong>Air Quality:</strong> {{ weather.air_quality }}</p>
+    </div>
+
+    <div class="logout">
+        <a href="{{ url_for('logout') }}" style="color:red; font-weight:bold;">Logout</a>
+    </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const audios = document.querySelectorAll('audio');
+
+    audios.forEach(audio => {
+      audio.addEventListener('play', () => {
+        audios.forEach(otherAudio => {
+          if (otherAudio !== audio) {
+            otherAudio.pause();
+            otherAudio.currentTime = 0;
+          }
+        });
+      });
+    });
+  });
+</script>
+
+
+</body>
+</html>

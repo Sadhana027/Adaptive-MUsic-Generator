@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Welcome Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 40px 60px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+        p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #00ffcc;
+            color: black;
+            font-weight: bold;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #00e6b8;
+        }
+
+        form button {
+            background: #00ffcc;
+            color: #000;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        form button:hover {
+            background: #00cca8;
+        }
+        .logout-link {
+            margin-top: 25px;
+            display: inline-block;
+            color: #fff;
+            font-size: 0.9em;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .logout-link:hover {
+            color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, {{ username }}!</h1>
+        <p>Ready to enjoy your personalized mood-based music?</p>
+
+        <!-- Button to redirect to the main player UI -->
+        <a href="{{ url_for('player') }}" class="btn">Go to Music Player</a>
+
+
+
+        <br><br>
+        <a href="{{ url_for('logout') }}">Logout</a>
+
+    </div>
+</body>
+</html>
